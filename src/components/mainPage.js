@@ -20,7 +20,6 @@ export default function MainPage(props){
   <div id="main-page-container">
     {/* //input tag */}
     <div className='container1' id='searchbar'>
-      
       <input onChange={(e) => setInputValue(e.target.value)}  value={inputValue} placeholder="Enter Genre here"></input>
       <button id='searchbutton' onClick={props.getRecommendations}>Search</button>
     </div>

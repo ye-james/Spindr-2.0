@@ -20,8 +20,8 @@ function App() {
 
       <Routes>
         <Route exact path='/' element={<Login/>}/>
-        <Route path='/home' element={<ExplorePage/>}/>
-        {/* <Route path='/home' element={<MainPage/>}/> */}
+        <Route path='/explore' element={<ExplorePage/>}/>
+        <Route path='/home' element={<MainPage/>}/>
       </Routes>
 
     </div>
