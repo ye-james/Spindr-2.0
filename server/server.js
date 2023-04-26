@@ -26,7 +26,6 @@ const clientSecret = process.env.CLIENT_SECRET; //ADD YOUR OWN CLIENT SECRET
 Secret is generated when a dev account on spotify is created
 Make sure to remove this after project is done if you care about your spotify security
 const clientSecret = 'YOUR_CLIENT_SECRET'; */
-
 const redirectUri = process.env.REDIRECT_URI;
 
 //These define the parameters that the user will provide us access to.
@@ -69,7 +68,7 @@ app.get('/login', (req, res) => {
   // const codeVerifier = generateRandomString();
   // const codeChallenge = base64UrlEncode(crypto.createHash('sha256').update(codeVerifier).digest());
   const state = generateRandomString(16); //need to generate random state string for security
-
+  
   const authorizationUrl =
     'https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -151,7 +150,7 @@ app.get('/callback', (req, res) => {
           maxAge: 3600000, //cookie will expire in an hour
         });
 
-        res.redirect('http://localhost:8080');
+        res.redirect('http://localhost:8080/home');
 
         // axios
         //   .get('https://api.spotify.com/v1/me', {
@@ -198,7 +197,7 @@ app.post('/getSongRecs', (req, res) => {
 
   spotifyApi
     .getRecommendations({
-      seed_genres: 'pop,chill',
+      seed_genres: 'pop,chill', // <-- hard coded, change to replace with user preference through frontend
       max_popularity: 60,
     })
     .then((data) => {

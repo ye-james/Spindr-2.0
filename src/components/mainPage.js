@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./card";
+import * as Spotify from '../api/fetch';
 
 export default function MainPage(props){
+  const [recommendedTracks, setRecommendedTracks] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    Spotify.getRecommendations('pop').then(data => {
+      console.log(data)
+      setRecommendedTracks(data.trackDetails)});
+  }, []);
+
   
   return(
     //div for flex container
@@ -9,11 +19,10 @@ export default function MainPage(props){
     {/* //input tag */}
     <div className='container1' id='searchbar'>
       
-      <input onChange={props.handleOnChange} placeholder="Enter Genre here"></input>
+      <input onChange={(e) => setInputValue(e.target.value)}  value={inputValue} placeholder="Enter Genre here"></input>
       <button id='searchbutton' onClick={props.getRecommendations}>Search</button>
     </div>
-    <Card musicList={props.musicList}/>
-   {/* //link button for playlist? */}
+      <Card musicList={props.musicList} recommendedTracks={recommendedTracks}/>
   </div>
    
   )

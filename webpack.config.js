@@ -13,6 +13,9 @@ module.exports = {
     }),
   ],
   devServer: {
+    // host: 'localhost',
+    // port: 8080,
+    // hot: true,
     static: {
       directory: path.resolve(__dirname, 'dist'),
       publicPath: '/dist',
@@ -21,6 +24,7 @@ module.exports = {
       '/api': {
         target: 'http://localhost:3000',
         secure: false,
+        
       },
     },
     headers: {
