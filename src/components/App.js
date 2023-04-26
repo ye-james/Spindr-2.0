@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 import MainPage from './mainPage';
 import Login from './login';
-import * as Spotify from './fetch';
 
-const recs = Spotify.getRecommendations("pop");
-console.log("recs", recs);
+
 
 function App() {
+
+
+
   // A state that represents if user is logged in
   const [loggedIn, setLoggedIn] = useState(false);
   // Function that changes login status
@@ -15,10 +17,22 @@ function App() {
     setLoggedIn(!loggedIn);
   }
   // If user is logged in, return mainpage component
-  if (loggedIn) {
-     return <MainPage />
-    }
-  return <Login handleLoginClick={handleLoginClick}/>  
+  return (
+    <div>
+
+      <Routes>
+        <Route exact path='/' element={<Login/>}/>
+        <Route path='/home' element={<MainPage/>}/>
+      </Routes>
+
+    </div>
+
+
+  )  
+  // if (loggedIn) {
+  //    return <MainPage />
+  //   }
+  // return <Login handleLoginClick={handleLoginClick}/>  
 }
 
 export default App;

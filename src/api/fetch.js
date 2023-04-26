@@ -1,16 +1,23 @@
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 
+// const tokens = {
+//   token: getCookieValue('access_token'),
+//   tokenType: getCookieValue('token_type')
+// }
+
+// const [cookies] = useCookies(['access_token']);
+
+const getCookieValue = (name) => (
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+  )
+console.log(getCookieValue)
 //need to export these functions for React app to use
 //using axios, they can make fetch requests in React app
 //genre takes in a string, comma-separated ex: "country,classical"
 export async function getRecommendations(genres) {
   //TO DO: check if the useCookies method actually retrieves cookies within react app
-  const [cookies] = useCookies(['access_token']);
-  console.log('cookie', cookies);
-  const token = cookies['access_token'];
-  console.log('TOKEN : ', token);
-  const tokenType = cookies['token_type'];
+  const token = getCookieValue('access_token');
+  const tokenType = getCookieValue('token_type');
 
   const params = {
     limit: 30,
@@ -28,13 +35,13 @@ export async function getRecommendations(genres) {
 
     let trackDetails = []; //array to store all 20 found uris of tracks from api call
     let trackUris = [];
-
+    console.log('response back from spotify',response.data)
     response.data.tracks.forEach((track) => {
       //only store tracks that have preview URLs
       if (track.preview_url !== null) {
         trackDetails.push({
           trackName: track.name,
-          artistName: track.artists.name,
+          artistName: track.artists,
           albumImg: track.album.images[0], //get the largest size of album img for track
           trackUri: track.uri,
           previewUrl: track.preview_url,
