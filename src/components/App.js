@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import MainPage from './mainPage';
+import ExplorePage from './explore';
 import Login from './login';
 
 
@@ -22,7 +23,8 @@ function App() {
 
       <Routes>
         <Route exact path='/' element={<Login/>}/>
-        <Route path='/home' element={<MainPage/>}/>
+        <Route path='/home' element={<ExplorePage/>}/>
+        {/* <Route path='/home' element={<MainPage/>}/> */}
       </Routes>
 
     </div>

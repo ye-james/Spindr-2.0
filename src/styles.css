@@ -184,3 +184,49 @@ button:hover {
 input:focus {
   outline: 1px solid rgb(18, 236, 18);
 }
+
+
+/* EXPLORE PAGE */
+
+.exploreContainer .carousel{
+  display: flex;
+ margin: auto;
+ 
+ /* background-repeat: no-repeat; */
+  width: 100%;
+  height: 300px;
+  
+}
+
+.exploreContainer .genreContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 50px;
+  
+}
+
+.genreContainer .genreWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+ 
+}
+
+.genreWrapper .btn{
+  margin-top: 10px;
+  height: 40px;
+  padding: 0px 20px;
+  align-self: center;
+  border-radius: 20px;
+  border: solid white;
+  width: 45%;
+  cursor: pointer;
+}
+
+.genreWrapper .btn:hover{
+  -webkit-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+-moz-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+}
