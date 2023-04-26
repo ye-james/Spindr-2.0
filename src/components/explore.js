@@ -11,10 +11,11 @@ import pop8 from '../../assets:images/p8.jpg';
 import pop9 from '../../assets:images/p9.jpg';
 import pop10 from '../../assets:images/p10.jpg';
 
-
+const genreList = ['Pop','Rock','Country','Instrumental','Jazz','Classical','Latin','Techno','Hip Hop', 'Blues'];
 
 export default function ExplorePage() {
 
+   
     return(
         <>       
         <div className= 'exploreContainer'>
@@ -60,6 +61,15 @@ export default function ExplorePage() {
                     <div className="card" style={{marginTop: 35, backgroundImage: `url(${pop10})`}}></div>
                     <button className="btn">Blues</button>
                 </div>
+
+               {/* {( 
+                    genreList.map((el, i) => {
+                       return  <div className="genreWrapper">
+                            <div className="card" style={{marginTop: 35, backgroundImage: `url(${`pop${i+1}`})`}}></div>
+                            <button className="btn">{el}</button>
+                        </div> 
+                    })
+                )} */}
                 
             </div>
         </div>
