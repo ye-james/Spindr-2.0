@@ -35,13 +35,13 @@ export async function getRecommendations(genres) {
 
     let trackDetails = []; //array to store all 20 found uris of tracks from api call
     let trackUris = [];
-
+    console.log('response back from spotify',response.data)
     response.data.tracks.forEach((track) => {
       //only store tracks that have preview URLs
       if (track.preview_url !== null) {
         trackDetails.push({
           trackName: track.name,
-          artistName: track.artists.name,
+          artistName: track.artists,
           albumImg: track.album.images[0], //get the largest size of album img for track
           trackUri: track.uri,
           previewUrl: track.preview_url,
