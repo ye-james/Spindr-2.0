@@ -8,6 +8,8 @@ const axios = require('axios'); //easier library for fetching
 //this allows you to access .env files to read data
 //client ID is stored in .env file for security
 
+const PlaylistController = require('./controllers/PlaylistController')
+
 // const cors = require('cors');
 require('dotenv').config();
 const PORT = process.env.PORT || 3000;
@@ -180,6 +182,27 @@ app.get('/callback', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../src/index.html'));
 });
+
+app.get('/playlist', 
+  PlaylistController.getPlaylist, 
+  (req, res) => {
+    return res.status(200). json(res.locals.wholePlaylist);
+  }
+)
+
+app.post('/playlist', 
+  PlaylistController.createPlaylist, 
+  (req, res) => {
+    return res.status(200).json(res.locals.song);
+  }
+)
+
+app.delete('/playlist', 
+  PlaylistController.deleteToPlaylist, 
+  (req,res) => {
+    return res.status(200).json(res.locals.deleteData)
+  }
+)
 
 app.post('/getSongRecs', (req, res) => {
   // res.set('Access-Control-Allow-Origin', '*');
