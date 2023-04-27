@@ -1,39 +1,34 @@
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useState, useRef } from "react";
+import axios from "axios";
 import { useSpring, animated } from "@react-spring/web";
 import TinderCard from "react-tinder-card"; //external module
 import { Howl, Howler } from "howler";
 
-const images = [
-  "https://picsum.photos/400/600",
-  "https://picsum.photos/401/601",
-  "https://picsum.photos/402/602",
-  "https://picsum.photos/403/603",
-  "https://picsum.photos/404/604",
-];
-
-
 //https://p.scdn.co/mp3-preview/30a5d9f993ed4a46b8e9d8fd52393f58b25fb370?cid=bba3237352b24f7194d0f1145475350c
-export default function Card({ musicList, recommendedTracks, addToPlaylist}) {
+export default function Card({ musicList, recommendedTracks, addToPlaylist }) {
   console.log(recommendedTracks);
 
-  const [lastDirection, setLastDirection] = useState();
   const [currentSong, setCurrentSong] = useState();
+  const refs = useRef([]);
+
+  function setRef(e, index, song) {
+    console.log(e);
+    refs.current[index] = song;
+  }
 
   const swiped = (direction, nameToDelete) => {
     console.log(direction);
-    setLastDirection(direction);
   };
 
-  const outOfFrame = (dir, song) => {
-    console.log('direction from outOfFrame ', dir)
-    console.log('current track to add to playlist:', song)
-    if(dir === 'right') {
-      addToPlaylist(song);
+  const outOfFrame = (dir, index, song) => {
+    console.log("direction from outOfFrame ", dir);
+    console.log("current track to add to playlist:", song);
+    if (dir === "right") {
+      addToPlaylist(refs.current[index]);
       //console.log(currentSong);
       stopAudio();
-    };
-  }
+    }
+  };
 
   const stopAudio = () => {
     currentSong.stop();
@@ -66,11 +61,12 @@ export default function Card({ musicList, recommendedTracks, addToPlaylist}) {
           }
           return (
             <TinderCard
+              ref={(e) => setRef(e, index, track)}
               flickOnSwipe
               className="swipe"
               key={track.albumImg.url}
               onSwipe={(dir) => swiped(dir, track.albumImg.url)}
-              onCardLeftScreen={(dir) => outOfFrame(dir,track)}
+              onCardLeftScreen={(dir) => outOfFrame(dir, index, track)}
               preventSwipe={["up", "down"]}
             >
               <div
