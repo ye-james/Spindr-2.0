@@ -16,14 +16,10 @@ mongoose.connect(MONGO_URI, {
   //create a schema for all of user info
 
   const userSchema = new Schema ({
-    name: {type: String, required: true},
-    email: {type: String, required: true},
+    // name: {type: String, required: true},
+    // email: {type: String, required: true},
     favList: [{
-      artistName: String,
-      songName: String,
-      albumName: String,
-      songUri: String,
-      albumUri: String
+      song: Object
     }]
   })
   

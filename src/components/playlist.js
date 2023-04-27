@@ -1,35 +1,25 @@
 import React, { useState } from "react";
+import axios from 'axios';
 
-export default function Playlist() {
-  const list = [
-    {
-      songTitle: "The quick brown fox jumps over the lazy dog",
-      id: 1,
-    },
-    {
-      songTitle: "The quick brown fox jumps over the lazy dog",
-      id: 2,
-    },
-    {
-      songTitle: "The quick brown fox jumps over the lazy dog",
-      id: 3,
-    },
-    {
-      songTitle: "The quick brown fox jumps over the lazy dog",
-      id: 4,
-    },
-    {
-      songTitle: "The quick brown fox jumps over the lazy dog",
-      id: 5,
-    },
-    {
-      songTitle: "The quick brown fox jumps over the lazy dog",
-      id: 6,
-    },
-  ];
+export default function Playlist({playlist, setPlaylist}) {
 
-  const removeSong = (id) => {
-    console.log(id);
+  console.log(playlist)
+  const removeSong = (song) => {
+    //make axios request to backend to delete
+    axios.delete('http://localhost:3000/playlist', {
+      data: {
+        song
+      }
+    }).then(result => {
+      console.log(result)
+      if(result.data.success) {
+        const updatedPlaylist = playlist.filter(s => s.trackUri !== song.trackUri)
+        console.log(updatedPlaylist)
+        setPlaylist(updatedPlaylist)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   };
 
   return (
@@ -38,13 +28,13 @@ export default function Playlist() {
         <h3>Swiped-Right Playlist</h3>
 
         <div className="list-container">
-          {list.map((song) => {
+          {playlist.map((song, index) => {
             return (
-              <li key={song.id}>
+              <li key={index}>
                 <div className="textBox">
-                  <span>The quick brown fox jumps over the lazy dog</span>
+                  <span>{`${song.artistName[0].name} - ${song.trackName}`}</span>
                 </div>
-                <button className="btn-del" onClick={() => removeSong(song.id)}>
+                <button className="btn-del" onClick={() => removeSong(song)}>
                   -
                 </button>
               </li>

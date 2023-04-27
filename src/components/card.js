@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import { useSpring, animated } from "@react-spring/web";
 import TinderCard from "react-tinder-card"; //external module
 import { Howl, Howler } from "howler";
@@ -11,8 +12,9 @@ const images = [
   "https://picsum.photos/404/604",
 ];
 
+
 //https://p.scdn.co/mp3-preview/30a5d9f993ed4a46b8e9d8fd52393f58b25fb370?cid=bba3237352b24f7194d0f1145475350c
-export default function Card({ musicList, recommendedTracks }) {
+export default function Card({ musicList, recommendedTracks, addToPlaylist}) {
   console.log(recommendedTracks);
 
   const [lastDirection, setLastDirection] = useState();
@@ -23,11 +25,15 @@ export default function Card({ musicList, recommendedTracks }) {
     setLastDirection(direction);
   };
 
-  const outOfFrame = (name) => {
-    console.log((name = "left the screen!"));
-    console.log(currentSong);
-    stopAudio();
-  };
+  const outOfFrame = (dir, song) => {
+    console.log('direction from outOfFrame ', dir)
+    console.log('current track to add to playlist:', song)
+    if(dir === 'right') {
+      addToPlaylist(song);
+      //console.log(currentSong);
+      stopAudio();
+    };
+  }
 
   const stopAudio = () => {
     currentSong.stop();
@@ -52,7 +58,7 @@ export default function Card({ musicList, recommendedTracks }) {
     <div className="cardContainer">
       {recommendedTracks.length > 0 &&
         recommendedTracks.map((track, index) => {
-          console.log(track);
+          // console.log(track);
 
           const artists = [];
           for (const artist of track.artistName) {
@@ -64,7 +70,7 @@ export default function Card({ musicList, recommendedTracks }) {
               className="swipe"
               key={track.albumImg.url}
               onSwipe={(dir) => swiped(dir, track.albumImg.url)}
-              onCardLeftScreen={() => outOfFrame(track.albumImg.url)}
+              onCardLeftScreen={(dir) => outOfFrame(dir,track)}
               preventSwipe={["up", "down"]}
             >
               <div

@@ -4,7 +4,7 @@ body {
   background: #000;
   color: #fff;
   font-family: "Cabin";
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 button {
