@@ -9,9 +9,12 @@ export default function MainPage(props){
   const [inputValue, setInputValue] = useState('');
   const location = useLocation();
   console.log(location.state , 'genre inside Main page from explore');
-
+  
+  // Disadvantage of using useLocation() - If the user refreshes the page or directly navigates to the route, the data will be lost. 
+  // To handle this, you can use other methods like URL parameters, context, or Redux.
   useEffect(() => {
-    Spotify.getRecommendations(location.state.genre).then(data => {
+   
+    Spotify.getRecommendations(location.state.genre.toLowerCase()).then(data => {
       console.log(data)
       setRecommendedTracks(data.trackDetails)});
   }, []);
