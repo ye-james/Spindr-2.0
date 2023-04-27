@@ -12,7 +12,6 @@ body {
   padding: 0.5rem 0.75rem;
 } */
 
-
 button:hover {
   cursor: pointer;
 }
@@ -23,9 +22,10 @@ button:hover {
   display: flex;
   margin: 0 20px;
   box-sizing: border-box;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   padding: 0.5rem;
+  width: 100%;
 }
 
 /* #root > div {
@@ -115,6 +115,36 @@ div.swipe {
 
 .mainPageContainer{
   height: 100vh;
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainCardContainer{
+  /* width: 100%; */
+  /* height: 100%; */
+  margin-top: 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
+.mainPageContainer .cardBtn{
+  margin-top: 10px;
+  height: 40px; 
+  align-self: center;
+  border-radius: 20px;
+  border: solid white;
+  width: 25%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* MAIN PAGE
+
+.mainPageContainer{
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -123,9 +153,9 @@ div.swipe {
   height: 100%;
   margin-top: 10%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-}
+} */
 
 /* EXPLORE PAGE */
 
@@ -191,11 +221,11 @@ div.swipe {
   cursor: pointer;
 }
 
-.exploreContainer .btn:hover, .searchBtn:hover, .loginBtn:hover{
+.exploreContainer .btn:hover, .searchBtn:hover, .loginBtn:hover, .cardBtn{
   border: 1px solid rgb(46, 46, 243);
   -webkit-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
--moz-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+  -moz-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+  box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
 }
 
 .genreWrapper .btn {
@@ -218,9 +248,17 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
 
 /* START OF PLAYLIST STYLING */
 
+.playlistContainer{
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
 .playlist-container {
+  width: 300px;
   border: 1px solid #fff;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 1rem 1.2rem 1rem;
 }
 
 .playlist-container > div > li {
@@ -235,12 +273,10 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
   margin-top: 1rem;
   max-height: 225px;
   overflow-y: scroll;
-}
-
-.list-container {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
+
 .list-container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
@@ -264,18 +300,30 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
   transform: translateX(calc(200px - 100%));
 }
 
-/* EXPLORE PAGE */
+.playlistContainer .playlistBtn{
+  margin-top: 10px;
+  height: 40px;
+  padding: 0px 20px;
+  align-self: center;
+  border-radius: 20px;
+  background-color: #242424;
+  color:#fff;
+  border: solid white;
+  cursor: pointer;
+}
 
-.exploreContainer .carousel {
+/*EXPLORE PAGE */
+
+/* .exploreContainer .carousel {
   display: flex;
   margin: auto;
 
   /* background-repeat: no-repeat; */
-  width: 100%;
+  /* width: 100%;
   height: 300px;
-}
+} */
 
-.exploreContainer .genreContainer {
+/* .exploreContainer .genreContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -305,9 +353,10 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
   -webkit-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
   -moz-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
   box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
-}
-
-.playlist-container {
+} */ 
+/* 
+PLAYLIST */ 
+/* .playlist-container {
   border: 1px solid #fff;
   padding: 0 1rem 1rem 1rem;
 }
@@ -328,11 +377,11 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
 
 .list-container {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-}
-.list-container::-webkit-scrollbar {
+  /* scrollbar-width: none; /* Firefox */
+/*} */
+/*.list-container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
-}
+/*}
 
 .textBox {
   width: 200px;
@@ -375,26 +424,10 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
   100% {
     transform: scale(1, 1);
   }
-}
-
-/* MAIN PAGE */
-
-.mainPageContainer{
-  height: 100vh;
-  overflow: hidden;
-}
-
-.mainCardContainer{
-  width: 100%;
-  height: 100%;
-  margin-top: 10%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
+}  */
 
 /* EXPLORE PAGE */
-
+/* 
 .exploreContainer .carousel{
   display: flex;
  margin: auto;
@@ -465,4 +498,4 @@ box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
   -webkit-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
 -moz-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
 box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
-}
+}  */

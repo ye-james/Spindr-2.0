@@ -12,9 +12,10 @@ export default function Card({
   setCurrentCard,
 }) {
   console.log(currentCard);
-
+ const [playing, setPlaying] = useState(false)
   const [currentSong, setCurrentSong] = useState();
   const [counter, setCounter] = useState(0);
+  const [buttonText, setButtonText] = useState('Play');
 
   const swiped = (direction) => {
     console.log(direction);
@@ -36,6 +37,7 @@ export default function Card({
 
   const stopAudio = () => {
     currentSong.stop();
+    setButtonText('Play');
   };
 
   const playAudio = () => {
@@ -45,7 +47,7 @@ export default function Card({
       volume: 0.1,
     });
     setCurrentSong(sound);
-
+    setButtonText('Stop');
     sound.play();
   };
 
@@ -69,12 +71,12 @@ export default function Card({
         )}
       </div>
       <p
-        style={{ color: "white", marginTop: "16rem" }}
+        style={{ color: "white" }}
       >{`${currentCard.artistName[0].name} - ${currentCard.trackName}`}</p>
-      <button style={{ marginTop: "1rem" }} onClick={() => playAudio()}>
-        Play
-      </button>
-      <button onClick={() => stopAudio()}>Stop</button>
+      <button className="cardBtn" onClick={ () => buttonText === 'Play' ? playAudio() : stopAudio() }>{buttonText}</button>
     </>
   );
 }
+
+
+
