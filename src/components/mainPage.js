@@ -5,22 +5,26 @@ import * as Spotify from '../api/fetch';
 import NavBar from "./navbar";
 import { useLocation } from "react-router-dom";
 import Playlist from "./playlist";
-import * as Spotify from "../api/fetch";
 
 export default function MainPage(props) {
   const [recommendedTracks, setRecommendedTracks] = useState([]);
   const [currentCard, setCurrentCard] = useState();
   const [inputValue, setInputValue] = useState("");
   const [playlist, setPlaylist] = useState([]);
+  const location = useLocation();
+  console.log(location.state , 'genre inside Main page from explore');
 
   useEffect(() => {
     setCurrentCard(recommendedTracks[0]);
   }, [recommendedTracks]);
 
   useEffect(() => {
-    Spotify.getRecommendations("pop").then((data) => {
-      setRecommendedTracks(data.trackDetails);
+   
+    Spotify.getRecommendations(location.state.genre.toLowerCase()).then(data => {
+      console.log(data)
+      setRecommendedTracks(data.trackDetails)
     });
+
 
     axios.get("http://localhost:3000/playlist").then((response) => {
       console.log("playlist from server", response.data);
@@ -46,30 +50,25 @@ export default function MainPage(props) {
   };
 
   return (
-    //div for flex container
-    <div id="main-page-container">
-      {/* //input tag */}
-      {/* <div className="container1" id="searchbar">
-        <input
-          onChange={(e) => setInputValue(e.target.value)}
-          value={inputValue}
-          placeholder="Enter Genre here"
-        ></input>
-        <button id="searchbutton" onClick={props.getRecommendations}>
-          Search
-        </button>
-      </div> */}
-      {currentCard && (
-        <Card
-          musicList={props.musicList}
-          recommendedTracks={recommendedTracks}
-          addToPlaylist={addToPlaylist}
-          currentCard={currentCard}
-          setCurrentCard={setCurrentCard}
-        />
-      )}
-
-      <Playlist playlist={playlist} setPlaylist={setPlaylist} />
-    </div>
+    <>
+      {/* //div for flex container */}
+      <div className="mainPageContainer">
+        <NavBar/>
+        <div className="mainCardContainer">
+          {currentCard && (
+            <Card
+              musicList={props.musicList}
+              recommendedTracks={recommendedTracks}
+              addToPlaylist={addToPlaylist}
+              currentCard={currentCard}
+              setCurrentCard={setCurrentCard}
+            />
+          )}
+        </div>
+        <Playlist playlist={playlist} setPlaylist={setPlaylist} />
+      </div>
+    </>
   );
 }
+
+

@@ -6,11 +6,11 @@ body {
   margin: 0px; 
 }
 
-button {
+/* button {
   background-color: #242424;
   color: #ffff;
   padding: 0.5rem 0.75rem;
-}
+} */
 
 
 button:hover {
@@ -28,9 +28,9 @@ button:hover {
   padding: 0.5rem;
 }
 
-#root > div {
+/* #root > div {
   height: 100%;
-}
+} */
 
 /* LOGIN PAGE */
 
@@ -53,14 +53,14 @@ button:hover {
   font-size: 16px;
 }
 
-#main-page-container {
+/* #main-page-container {
   display: block;
   display: flex;
   flex-direction: column;
   position: relative;
   height: 100%;
   justify-content: space-between;
-}
+} */
 
 .loginBtn a{
   text-decoration: none;
@@ -71,6 +71,9 @@ button:hover {
 
 .cardContainer {
   /* height: 300px; */
+  width: 90vw;
+  max-width: 260px;
+  height: 300px;
 }
 
 #card {
@@ -108,13 +111,27 @@ div.swipe {
 
 }
 
+/* MAIN PAGE */
+
+.mainPageContainer{
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mainCardContainer{
+  width: 100%;
+  height: 100%;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 /* EXPLORE PAGE */
 
 .exploreContainer .carousel {
   display: flex;
   margin: auto;
-
-  /* background-repeat: no-repeat; */
   width: 100%;
   height: 300px;
 }
@@ -126,11 +143,59 @@ div.swipe {
   margin-bottom: 50px;
 }
 
+.exploreContainer .searchContainer{
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: -15px;
+  align-items: center;
+}
+
 .genreContainer .genreWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+}
+
+.searchContainer input{
+  padding:  0px 15px;
+  border-radius: 20px;
+  height: 40px;
+ border: none;
+  margin-right: 20px;
+}
+
+.searchContainer .searchBtn{
+
+  height: 40px; 
+  align-self: center;
+  border-radius: 20px;
+  border: solid white;
+  width: 8%;
+  cursor: pointer;
+  background-color: #242424;
+  color:#fff;
+}
+
+.exploreContainer .btn{
+  margin-top: 10px;
+  height: 40px;
+  padding: 0px 20px;
+  align-self: center;
+  border-radius: 20px;
+  background-color: #242424;
+  color:#fff;
+  border: solid white;
+  width: 45%;
+  cursor: pointer;
+}
+
+.exploreContainer .btn:hover, .searchBtn:hover, .loginBtn:hover{
+  border: 1px solid rgb(46, 46, 243);
+  -webkit-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+-moz-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
 }
 
 .genreWrapper .btn {
@@ -150,6 +215,8 @@ div.swipe {
   -moz-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
   box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
 }
+
+/* START OF PLAYLIST STYLING */
 
 .playlist-container {
   border: 1px solid #fff;
