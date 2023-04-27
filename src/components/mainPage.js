@@ -21,7 +21,7 @@ export default function MainPage(props) {
   }, [recommendedTracks]);
 
   useEffect(() => {
-    Spotify.getRecommendations(location.state.genre.toLowerCase()).then(
+    Spotify.getRecommendations(location.state.genre.toLowerCase().replace(/\s/g, '')).then(
       (data) => {
         console.log(data);
         setRecommendedTracks(data.trackDetails);

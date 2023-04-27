@@ -15,7 +15,7 @@ import pop8 from '../../assets:images/p8.jpg';
 import pop9 from '../../assets:images/p9.jpg';
 import pop10 from '../../assets:images/p10.jpg';
 
-const genreList = ['Pop','Rock','Country','Instrumental','Jazz','Classical','Latin','Techno','Hip Hop', 'Blues'];
+const genreList = ['Pop','Rock','Country','Ambient','Jazz','Classical','Latin','Techno','Hip-Hop', 'Blues'];
 const popList =[pop1,pop2,pop3,pop4,pop5,pop6,pop7,pop8,pop9,pop10 ];
 
 
@@ -30,6 +30,12 @@ const handleClick = async(e) => {
     console.log((e.target.name), 'genre');
     navigate('/songs', {state: {genre: e.target.name}})
 }
+
+const handleChange = async(value) => {
+   
+    console.log((value), 'genre');
+    navigate('/songs', {state: {genre: value}})
+}
    
     return(
         <>       
@@ -37,8 +43,8 @@ const handleClick = async(e) => {
          <div className= 'exploreContainer'>
             <div className="carousel" style={{backgroundImage: `url(${bgImg})`}}></div>
             <div className='searchContainer'>
-                <input placeholder="Enter Genre here"></input>
-                <button className='searchBtn'>Search</button>
+                <input id = "inputField" placeholder="Enter Genre here" ></input>
+                <button className='searchBtn' onClick={(e) => handleChange(document.getElementById('inputField').value)}>Search</button>
             </div>
             <div className= "genreContainer">  {/* generates genre containers based on the genreList array */}
                {( 
