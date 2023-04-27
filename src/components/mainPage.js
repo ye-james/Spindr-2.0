@@ -6,8 +6,13 @@ import * as Spotify from "../api/fetch";
 
 export default function MainPage(props) {
   const [recommendedTracks, setRecommendedTracks] = useState([]);
+  const [currentCard, setCurrentCard] = useState();
   const [inputValue, setInputValue] = useState("");
   const [playlist, setPlaylist] = useState([]);
+
+  useEffect(() => {
+    setCurrentCard(recommendedTracks[0]);
+  }, [recommendedTracks]);
 
   useEffect(() => {
     Spotify.getRecommendations("pop").then((data) => {
@@ -26,11 +31,11 @@ export default function MainPage(props) {
       })
       .then((result) => {
         console.log(result);
-        // if(result.data.success) {
-        //   const updatedPlaylist = [...playlist]
-        //   updatedPlaylist.push(song)
-        //   setPlaylist(updatedPlaylist)
-        // }
+        if (result.data.success) {
+          const updatedPlaylist = [...playlist];
+          updatedPlaylist.push(song);
+          setPlaylist(updatedPlaylist);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -51,11 +56,15 @@ export default function MainPage(props) {
           Search
         </button>
       </div> */}
-      <Card
-        musicList={props.musicList}
-        recommendedTracks={recommendedTracks}
-        addToPlaylist={addToPlaylist}
-      />
+      {currentCard && (
+        <Card
+          musicList={props.musicList}
+          recommendedTracks={recommendedTracks}
+          addToPlaylist={addToPlaylist}
+          currentCard={currentCard}
+          setCurrentCard={setCurrentCard}
+        />
+      )}
 
       <Playlist playlist={playlist} setPlaylist={setPlaylist} />
     </div>
