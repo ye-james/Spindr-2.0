@@ -23,7 +23,7 @@ export default function Playlist({playlist, setPlaylist}) {
   };
 
   return (
-    <div>
+    <div className="playlistContainer">
       <ul className="playlist-container">
         <h3>Swiped-Right Playlist</h3>
 
@@ -42,7 +42,7 @@ export default function Playlist({playlist, setPlaylist}) {
           })}
         </div>
       </ul>
-      <button>Create Playlist on Spotify</button>
+      <button className="playlistBtn">Create Playlist on Spotify</button>
     </div>
   );
 }
