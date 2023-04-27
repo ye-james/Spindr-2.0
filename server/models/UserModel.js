@@ -22,7 +22,11 @@ const userSchema = new Schema({
   // email: {type: String, required: true},
   favList: [
     {
-      song: Object,
+      albumImg: Object,
+      artistName: [Object],
+      previewUrl: String,
+      trackName: String,
+      traukUri: String,
     },
   ],
 });

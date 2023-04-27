@@ -1,25 +1,29 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
-export default function Playlist({playlist, setPlaylist}) {
-
-  console.log(playlist)
+export default function Playlist({ playlist, setPlaylist }) {
+  console.log(playlist);
   const removeSong = (song) => {
     //make axios request to backend to delete
-    axios.delete('http://localhost:3000/playlist', {
-      data: {
-        song
-      }
-    }).then(result => {
-      console.log(result)
-      if(result.data.success) {
-        const updatedPlaylist = playlist.filter(s => s.trackUri !== song.trackUri)
-        console.log(updatedPlaylist)
-        setPlaylist(updatedPlaylist)
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    axios
+      .delete("http://localhost:3000/playlist", {
+        data: {
+          song,
+        },
+      })
+      .then((result) => {
+        console.log(result);
+        if (result.data.success) {
+          const updatedPlaylist = playlist.filter(
+            (s) => s.trackUri !== song.trackUri
+          );
+          console.log(updatedPlaylist);
+          setPlaylist(updatedPlaylist);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

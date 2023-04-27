@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./card";
-import * as Spotify from '../api/fetch';
+import * as Spotify from "../api/fetch";
 import NavBar from "./navbar";
 import { useLocation } from "react-router-dom";
 import Playlist from "./playlist";
@@ -12,22 +12,23 @@ export default function MainPage(props) {
   const [inputValue, setInputValue] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const location = useLocation();
-  console.log(location.state , 'genre inside Main page from explore');
+  console.log(location.state, "genre inside Main page from explore");
 
   useEffect(() => {
     setCurrentCard(recommendedTracks[0]);
   }, [recommendedTracks]);
 
   useEffect(() => {
-   
-    Spotify.getRecommendations(location.state.genre.toLowerCase()).then(data => {
-      console.log(data)
-      setRecommendedTracks(data.trackDetails)
-    });
-
+    Spotify.getRecommendations(location.state.genre.toLowerCase()).then(
+      (data) => {
+        console.log(data);
+        setRecommendedTracks(data.trackDetails);
+      }
+    );
 
     axios.get("http://localhost:3000/playlist").then((response) => {
       console.log("playlist from server", response.data);
+      setPlaylist(response.data);
     });
   }, []);
 
@@ -53,7 +54,7 @@ export default function MainPage(props) {
     <>
       {/* //div for flex container */}
       <div className="mainPageContainer">
-        <NavBar/>
+        <NavBar />
         <div className="mainCardContainer">
           {currentCard && (
             <Card
@@ -70,5 +71,3 @@ export default function MainPage(props) {
     </>
   );
 }
-
-

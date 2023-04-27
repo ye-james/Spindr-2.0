@@ -28,7 +28,7 @@ export default function Card({
     console.log("current track to add to playlist:", song);
     if (dir === "right") {
       //addToPlaylist(refs.current[index]);
-      //addToPlaylist(currentCard);
+      addToPlaylist(currentCard);
       //console.log(currentSong);
     }
     // if (currentSong) stopAudio();
