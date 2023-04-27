@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import Card from "./card";
 import * as Spotify from "../api/fetch";
 import NavBar from "./navbar";
 import { useLocation } from "react-router-dom";
 import Playlist from "./playlist";
+import debounce from "lodash.debounce";
 
 export default function MainPage(props) {
   const [recommendedTracks, setRecommendedTracks] = useState([]);
@@ -12,6 +13,7 @@ export default function MainPage(props) {
   const [inputValue, setInputValue] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const location = useLocation();
+
   console.log(location.state, "genre inside Main page from explore");
 
   useEffect(() => {
@@ -32,23 +34,49 @@ export default function MainPage(props) {
     });
   }, []);
 
-  const addToPlaylist = (song) => {
-    axios
-      .post("http://localhost:3000/playlist", {
-        song,
-      })
-      .then((result) => {
-        console.log(result);
-        if (result.data.success) {
-          const updatedPlaylist = [...playlist];
-          updatedPlaylist.push(song);
-          setPlaylist(updatedPlaylist);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  useEffect(() => {
+    return () => {
+      debouncedAddToPlaylist.cancel();
+    };
+  }, []);
+
+  const addToPlaylist = useCallback(
+    (song) => {
+      axios
+        .post("http://localhost:3000/playlist", {
+          song,
+        })
+        .then((result) => {
+          console.log(result);
+          if (result.data.success) {
+            setPlaylist((prevPlaylist) => {
+              const updatedPlaylist = [...prevPlaylist];
+              // check if song is already in the playlist
+              const songExists = updatedPlaylist.some((item) => item === song);
+              if (!songExists) {
+                updatedPlaylist.push(song);
+              }
+              return updatedPlaylist;
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [setPlaylist]
+  );
+
+  const debouncedAddToPlaylist = useCallback(
+    debounce(
+      (song) => {
+        addToPlaylist(song);
+      },
+      200,
+      { leading: false }
+    ),
+    [addToPlaylist]
+  );
 
   return (
     <>
@@ -58,11 +86,12 @@ export default function MainPage(props) {
         <div className="mainCardContainer">
           {currentCard && (
             <Card
-              musicList={props.musicList}
               recommendedTracks={recommendedTracks}
-              addToPlaylist={addToPlaylist}
               currentCard={currentCard}
               setCurrentCard={setCurrentCard}
+              playlist={playlist}
+              setPlaylist={setPlaylist}
+              debouncedAddToPlaylist={debouncedAddToPlaylist}
             />
           )}
         </div>
