@@ -1,46 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import axios from "axios";
 import { useSpring, animated } from "@react-spring/web";
 import TinderCard from "react-tinder-card"; //external module
 import { Howl, Howler } from "howler";
 
-
-const images = [
-  "https://picsum.photos/400/600",
-  "https://picsum.photos/401/601",
-  "https://picsum.photos/402/602",
-  "https://picsum.photos/403/603",
-  "https://picsum.photos/404/604",
-];
-
 //https://p.scdn.co/mp3-preview/30a5d9f993ed4a46b8e9d8fd52393f58b25fb370?cid=bba3237352b24f7194d0f1145475350c
-export default function Card({ musicList, recommendedTracks }) {
-  console.log(recommendedTracks);
+export default function Card({
+  musicList,
+  recommendedTracks,
+  addToPlaylist,
+  setRecommendedTracks,
+  currentCard,
+  setCurrentCard,
+}) {
+  console.log(currentCard);
 
-  const [lastDirection, setLastDirection] = useState();
   const [currentSong, setCurrentSong] = useState();
+  const [counter, setCounter] = useState(0);
 
-  const swiped = (direction, nameToDelete) => {
+  const swiped = (direction) => {
     console.log(direction);
-    setLastDirection(direction);
+    setCounter(counter + 1);
+    setCurrentCard(recommendedTracks[counter + 1]);
+    if (currentSong) stopAudio();
   };
 
-  const outOfFrame = (name) => {
-    console.log((name = "left the screen!"));
-    console.log(currentSong);
-    stopAudio();
+  const outOfFrame = (dir, index, song) => {
+    console.log("direction from outOfFrame ", dir);
+    console.log("current track to add to playlist:", song);
+    if (dir === "right") {
+      //addToPlaylist(refs.current[index]);
+      //addToPlaylist(currentCard);
+      //console.log(currentSong);
+    }
+    // if (currentSong) stopAudio();
   };
 
   const stopAudio = () => {
     currentSong.stop();
   };
 
-  const pauseAudio = () => {
-    currentSong.pause();
-  };
-
-  const playAudio = (audioLink) => {
+  const playAudio = () => {
     const sound = new Howl({
-      src: audioLink,
+      src: currentCard.previewUrl,
       html5: true,
       volume: 0.1,
     });
@@ -50,30 +52,48 @@ export default function Card({ musicList, recommendedTracks }) {
   };
 
   return (
-    <div className="cardContainer">
-      {recommendedTracks.length > 0 &&
-        recommendedTracks.map((track, index) => {
-          // console.log(track);
+    <>
+      <div className="cardContainer">
+        {currentCard && (
+          <TinderCard
+            swipeRequirementType="position"
+            className="swipe"
+            key={currentCard.albumImg.url}
+            onSwipe={(dir) => swiped(dir)}
+            onCardLeftScreen={(dir) => outOfFrame(dir)}
+            preventSwipe={["up", "down"]}
+          >
+            <div
+              className="card container1"
+              style={{ backgroundImage: `url(${currentCard.albumImg.url})` }}
+            ></div>
+          </TinderCard>
+        )}
+        {/* {recommendedTracks.length > 0 &&
+          recommendedTracks.map((track, index) => {
+            // console.log(track);
 
-          const artists = [];
-          for (const artist of track.artistName) {
-            artists.push(artist.name);
-          }
-          return (
-            <TinderCard
-              flickOnSwipe
-              className="swipe"
-              key={index}
-              onSwipe={(dir) => swiped(dir, track.albumImg.url)}
-              onCardLeftScreen={() => outOfFrame(track.albumImg.url)}
-              preventSwipe={["up", "down"]}
-            >
-              <div
-                className="card container1"
-                style={{ backgroundImage: `url(${track.albumImg.url})` }}
-              ></div>
-              {/* <p className="">{`${artists.join(", ")} - ${track.trackName}`}</p> */}
-              <button
+            const artists = [];
+            for (const artist of track.artistName) {
+              artists.push(artist.name);
+            }
+            return (
+              <TinderCard
+                ref={(e) => setRef(e, index, track)}
+                swipeRequirementType="position"
+                flickOnSwipe
+                className="swipe"
+                key={track.albumImg.url}
+                onSwipe={(dir) => swiped(dir, track.albumImg.url)}
+                onCardLeftScreen={(dir) => outOfFrame(dir, index, track)}
+                preventSwipe={["up", "down"]}
+              >
+                <div
+                  className="card container1"
+                  style={{ backgroundImage: `url(${track.albumImg.url})` }}
+                ></div>
+                {/* <p className="">{`${artists.join(", ")} - ${track.trackName}`}</p> */}
+        {/* <button
                 id="playButton"
                 onClick={() => playAudio(track.previewUrl)}
               >
@@ -81,10 +101,18 @@ export default function Card({ musicList, recommendedTracks }) {
               </button>
               <button id="pauseButton" onClick={() => stopAudio()}>
                 Stop
-              </button>
+              </button> 
             </TinderCard>
-          );
-        })}
-    </div>
+            );
+          })} */}
+      </div>
+      <p
+        style={{ color: "white", marginTop: "16rem" }}
+      >{`${currentCard.artistName[0].name} - ${currentCard.trackName}`}</p>
+      <button style={{ marginTop: "1rem" }} onClick={() => playAudio()}>
+        Play
+      </button>
+      <button onClick={() => stopAudio()}>Stop</button>
+    </>
   );
 }
