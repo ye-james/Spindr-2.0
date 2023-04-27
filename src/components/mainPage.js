@@ -27,8 +27,8 @@ export default function MainPage(props) {
     );
 
     axios.get("http://localhost:3000/playlist").then((response) => {
-      console.log("playlist from server", response.data);
-      setPlaylist(response.data);
+      console.log("playlist from server", response.data[0].favList);
+      setPlaylist(response.data[0].favList);
     });
   }, []);
 

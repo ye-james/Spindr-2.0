@@ -3,7 +3,7 @@ body {
   background: #000;
   color: #fff;
   font-family: "Cabin";
-  margin: 0px; 
+  margin: 0px;
 }
 
 /* button {
@@ -18,7 +18,7 @@ button:hover {
 
 /* NAVBAR PAGE */
 
-.NavBar{
+.NavBar {
   display: flex;
   margin: 0 20px;
   box-sizing: border-box;
@@ -34,17 +34,17 @@ button:hover {
 
 /* LOGIN PAGE */
 
-.loginContainer{
+.loginContainer {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
-  width:100%;
-  margin-top: 20%;  
+  width: 100%;
+  margin-top: 20%;
 }
 
-.loginContainer .loginBtn{
+.loginContainer .loginBtn {
   margin-top: 10px;
-  height: 40px; 
+  height: 40px;
   align-self: center;
   border-radius: 20px;
   border: solid white;
@@ -62,9 +62,9 @@ button:hover {
   justify-content: space-between;
 } */
 
-.loginBtn a{
+.loginBtn a {
   text-decoration: none;
-  color: #242424
+  color: #242424;
 }
 
 /* CARD COMPONENT */
@@ -108,31 +108,30 @@ div.swipe {
   flex-direction: column;
   align-items: center;
   position: absolute;
-
 }
 
 /* MAIN PAGE */
 
-.mainPageContainer{
+.mainPageContainer {
   height: 100vh;
-  overflow: hidden; 
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.mainCardContainer{
+.mainCardContainer {
   /* width: 100%; */
   /* height: 100%; */
   margin-top: 6%;
   display: flex;
   flex-direction: column;
   align-items: center;
-} 
+}
 
-.mainPageContainer .cardBtn{
+.mainPageContainer .cardBtn {
   margin-top: 10px;
-  height: 40px; 
+  height: 40px;
   align-self: center;
   border-radius: 20px;
   border: solid white;
@@ -173,7 +172,7 @@ div.swipe {
   margin-bottom: 50px;
 }
 
-.exploreContainer .searchContainer{
+.exploreContainer .searchContainer {
   display: flex;
   justify-content: center;
   margin-top: 15px;
@@ -188,44 +187,46 @@ div.swipe {
   margin-top: 20px;
 }
 
-.searchContainer input{
-  padding:  0px 15px;
+.searchContainer input {
+  padding: 0px 15px;
   border-radius: 20px;
   height: 40px;
- border: none;
+  border: none;
   margin-right: 20px;
 }
 
-.searchContainer .searchBtn{
-
-  height: 40px; 
+.searchContainer .searchBtn {
+  height: 40px;
   align-self: center;
   border-radius: 20px;
   border: solid white;
   width: 8%;
   cursor: pointer;
   background-color: #242424;
-  color:#fff;
+  color: #fff;
 }
 
-.exploreContainer .btn{
+.exploreContainer .btn {
   margin-top: 10px;
   height: 40px;
   padding: 0px 20px;
   align-self: center;
   border-radius: 20px;
   background-color: #242424;
-  color:#fff;
+  color: #fff;
   border: solid white;
   width: 45%;
   cursor: pointer;
 }
 
-.exploreContainer .btn:hover, .searchBtn:hover, .loginBtn:hover, .cardBtn{
+.exploreContainer .btn:hover,
+.searchBtn:hover,
+.loginBtn:hover,
+.cardBtn {
   border: 1px solid rgb(46, 46, 243);
-  -webkit-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
-  -moz-box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
-  box-shadow: 4px 0px 40px 7px rgba(61,60,61,1);
+  -webkit-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
+  -moz-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
+  box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
 }
 
 .genreWrapper .btn {
@@ -248,11 +249,11 @@ div.swipe {
 
 /* START OF PLAYLIST STYLING */
 
-.playlistContainer{
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
+.playlistContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .playlist-container {
@@ -300,14 +301,14 @@ align-items: center;
   transform: translateX(calc(200px - 100%));
 }
 
-.playlistContainer .playlistBtn{
+.playlistContainer .playlistBtn {
   margin-top: 10px;
   height: 40px;
   padding: 0px 20px;
   align-self: center;
   border-radius: 20px;
   background-color: #242424;
-  color:#fff;
+  color: #fff;
   border: solid white;
   cursor: pointer;
 }
@@ -319,7 +320,7 @@ align-items: center;
   margin: auto;
 
   /* background-repeat: no-repeat; */
-  /* width: 100%;
+/* width: 100%;
   height: 300px;
 } */
 
@@ -353,9 +354,9 @@ align-items: center;
   -webkit-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
   -moz-box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
   box-shadow: 4px 0px 40px 7px rgba(61, 60, 61, 1);
-} */ 
+} */
 /* 
-PLAYLIST */ 
+PLAYLIST */
 /* .playlist-container {
   border: 1px solid #fff;
   padding: 0 1rem 1rem 1rem;
@@ -377,7 +378,7 @@ PLAYLIST */
 
 .list-container {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-  /* scrollbar-width: none; /* Firefox */
+/* scrollbar-width: none; /* Firefox */
 /*} */
 /*.list-container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */

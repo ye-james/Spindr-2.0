@@ -32,18 +32,22 @@ export default function Playlist({ playlist, setPlaylist }) {
         <h3>Swiped-Right Playlist</h3>
 
         <div className="list-container">
-          {/* {playlist.map((song, index) => {
-            return (
-              <li key={index}>
-                <div className="textBox">
-                  <span>{`${song.artistName[0].name} - ${song.trackName}`}</span>
-                </div>
-                <button className="btn-del" onClick={() => removeSong(song)}>
-                  -
-                </button>
-              </li>
-            );
-          })} */}
+          {playlist.length === 0 ? (
+            <h4>Add some songs to the playlist</h4>
+          ) : (
+            playlist.map((song, index) => {
+              return (
+                <li key={index}>
+                  <div className="textBox">
+                    <span>{`${song.artistName[0].name} - ${song.trackName}`}</span>
+                  </div>
+                  <button className="btn-del" onClick={() => removeSong(song)}>
+                    -
+                  </button>
+                </li>
+              );
+            })
+          )}
         </div>
       </ul>
       <button className="playlistBtn">Create Playlist on Spotify</button>
