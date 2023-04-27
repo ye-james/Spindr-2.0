@@ -3,6 +3,7 @@ import { useSpring, animated } from "@react-spring/web";
 import TinderCard from "react-tinder-card"; //external module
 import { Howl, Howler } from "howler";
 
+
 const images = [
   "https://picsum.photos/400/600",
   "https://picsum.photos/401/601",
@@ -52,7 +53,7 @@ export default function Card({ musicList, recommendedTracks }) {
     <div className="cardContainer">
       {recommendedTracks.length > 0 &&
         recommendedTracks.map((track, index) => {
-          console.log(track);
+          // console.log(track);
 
           const artists = [];
           for (const artist of track.artistName) {
@@ -62,7 +63,7 @@ export default function Card({ musicList, recommendedTracks }) {
             <TinderCard
               flickOnSwipe
               className="swipe"
-              key={track.albumImg.url}
+              key={index}
               onSwipe={(dir) => swiped(dir, track.albumImg.url)}
               onCardLeftScreen={() => outOfFrame(track.albumImg.url)}
               preventSwipe={["up", "down"]}

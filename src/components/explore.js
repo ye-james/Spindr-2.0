@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useHistory } from "react-router-dom";
+import Navbar from './navbar';
+
+/* IMPORTING IMAGES */
 import bgImg from '../../assets:images/explorebg.jpg'
 import pop1 from '../../assets:images/p1.jpg';
 import pop2 from '../../assets:images/p2.jpg';
@@ -12,16 +16,52 @@ import pop9 from '../../assets:images/p9.jpg';
 import pop10 from '../../assets:images/p10.jpg';
 
 const genreList = ['Pop','Rock','Country','Instrumental','Jazz','Classical','Latin','Techno','Hip Hop', 'Blues'];
+const popList =[pop1,pop2,pop3,pop4,pop5,pop6,pop7,pop8,pop9,pop10 ];
+
+
 
 export default function ExplorePage() {
+const [genre, setGenre] = useState("");
+const navigate = useNavigate();
+// const history = useHistory();
 
+const handleClick = async(e) => {
+   
+    console.log((e.target.name), 'genre');
+    navigate('/songs', {state: {genre: e.target.name}})
+}
    
     return(
         <>       
-        <div className= 'exploreContainer'>
+        <Navbar/>
+         <div className= 'exploreContainer'>
             <div className="carousel" style={{backgroundImage: `url(${bgImg})`}}></div>
-            <div className= "genreContainer">
-                <div className="genreWrapper">
+            <div className='searchContainer'>
+                <input placeholder="Enter Genre here"></input>
+                <button className='searchBtn'>Search</button>
+            </div>
+            <div className= "genreContainer">  {/* generates genre containers based on the genreList array */}
+               {( 
+                    genreList.map((el, i) => {
+                       return  <div key={i} className="genreWrapper">
+                            <div className="card" style={{marginTop: 35, backgroundImage: `url(${popList[i]})`}}></div>
+                            <button className="btn" id='btn' onClick={handleClick} name={el}>{el}</button>
+                        </div> 
+                    })
+                )}                
+            </div>
+        </div>
+        
+        
+        
+        </>
+       
+    )
+}
+
+
+
+{/* <div className="genreWrapper">
                     <div className="card" style={{marginTop: 35, backgroundImage: `url(${pop1})`}}></div>
                     <button className="btn">Pop</button>
                 </div>
@@ -60,23 +100,4 @@ export default function ExplorePage() {
                 <div className="genreWrapper">
                     <div className="card" style={{marginTop: 35, backgroundImage: `url(${pop10})`}}></div>
                     <button className="btn">Blues</button>
-                </div>
-
-               {/* {( 
-                    genreList.map((el, i) => {
-                       return  <div className="genreWrapper">
-                            <div className="card" style={{marginTop: 35, backgroundImage: `url(${`pop${i+1}`})`}}></div>
-                            <button className="btn">{el}</button>
-                        </div> 
-                    })
-                )} */}
-                
-            </div>
-        </div>
-        
-        
-        
-        </>
-       
-    )
-}
+                </div>   */}
