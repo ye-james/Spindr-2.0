@@ -32,7 +32,7 @@ export default function Playlist({ playlist, setPlaylist }) {
         <h3>Swiped-Right Playlist</h3>
 
         <div className="list-container">
-          {playlist.map((song, index) => {
+          {/* {playlist.map((song, index) => {
             return (
               <li key={index}>
                 <div className="textBox">
@@ -43,7 +43,7 @@ export default function Playlist({ playlist, setPlaylist }) {
                 </button>
               </li>
             );
-          })}
+          })} */}
         </div>
       </ul>
       <button className="playlistBtn">Create Playlist on Spotify</button>
