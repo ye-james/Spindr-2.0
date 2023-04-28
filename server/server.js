@@ -209,6 +209,13 @@ app.delete('/playlist',
   }
 )
 
+app.delete('/playlist/all', 
+  PlaylistController.deleteAll, 
+  (req,res) => {
+    return res.status(200).json({success: true})
+  }
+)
+
 app.post('/getSongRecs', (req, res) => {
   // res.set('Access-Control-Allow-Origin', '*');
   const { genres } = req.body;

@@ -31,14 +31,14 @@ playlistController.getPlaylist = (req, res, next) => {
 
 playlistController.addToPlaylist = (req, res, next) => {
   const { song } = req.body;
-  const { trackName, artistName, albumImg, trackUri, previewUrl } = song;
-  console.log(trackName, artistName, albumImg, trackUri, previewUrl);
+  const { trackName, artistName, albumImg, traukUri, previewUrl } = song;
+  console.log(trackName, artistName, albumImg, traukUri, previewUrl);
   //console.log("song", song);
   User.updateOne(
     {},
     {
       $push: {
-        favList: { trackName, artistName, albumImg, trackUri, previewUrl },
+        favList: { trackName, artistName, albumImg, traukUri, previewUrl },
       },
     }
   )
@@ -53,18 +53,27 @@ playlistController.addToPlaylist = (req, res, next) => {
 playlistController.deleteToPlaylist = (req, res, next) => {
   const { song } = req.body;
 
-  User.updateOne(
-    {},
-    { $pull: { favList: { $elemMatch: { trackUri: song.trackUri } } } }
-  )
+  console.log(song.trackUri);
+  // User.delete({artistName, songName})
+  //   .then(result => {
+  //     res.locals.deleteData = result;
+  //     return next();
+  //   })
+  //   .catch(console.log("Error in deletePlaylist"));
+  console.log("req.body", song);
+  User.updateOne({}, { $pull: { favList: { trackUri: song.trackUri } } })
     .then((result) => {
       res.locals.deleteData = result;
       return next();
-    })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    })  
+    .catch(console.log("Error in deletePlaylist"));
 };
+
+
+playlistController.deleteAll = (req,res,next) => {
+  User.deleteMany({}).then(result => {
+    return next();
+  }).catch(console.log("Error in deletePlaylist"));
+}
 
 module.exports = playlistController;

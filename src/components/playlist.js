@@ -35,51 +35,53 @@ export default function Playlist({ playlist, setPlaylist }) {
     // const token = cookies.get('access_token');
     // Get value of specific cookie
     const token = cookies['access_token'];
-
-    const trackUris = playlist.map(track => {
-      return track.trackUri
-    })
-
-    console.log(trackUris)
     
     // const tokenType = cookies.get('token_type');
     
-    // fetch('https://api.spotify.com/v1/users/dom.c13/playlists', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': 'Bearer ' + token
-    //   },
-    //   body: JSON.stringify({
-    //     'name': 'Spindr Playlist',
-    //     'public': false // set to true if you want the playlist to be public
-    //   })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('New playlist created:', data);
-    //   const trackUris = playlist.map(track => {
-    //     return track.trackUri
-    //   })
+    fetch('https://api.spotify.com/v1/users/dom.c13/playlists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        'name': 'Spindr Playlist',
+        'public': false // set to true if you want the playlist to be public
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('New playlist created:', data);
+      const trackUris = playlist.map(track => {
+        return track.trackUri
+      })
 
-    //   console.log(trackUris)
-    //   const updatedPlaylist = playlist.filter((s) => {
-    //     return s.trackUri !== undefined;
-    //   })
-    //   fetch(`https://api.spotify.com/v1/playlists/${data.id}/tracks`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //     body: JSON.stringify({
-    //       uris: [trackUris],
-    //     })
-    //   }).then(response => response.json()).then(data => console.log(data))
+      // console.log(trackUris)
+      // const updatedPlaylist = playlist.filter((s) => {
+      //   return s.trackUri !== undefined;
+      // })
+      fetch(`https://api.spotify.com/v1/playlists/${data.id}/tracks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          uris: trackUris,
+        })
+      }).then(response => response.json()).then(data => {
+        if(data) {
+          axios.delete('http://localhost:3000/playlist/all').then(result =>{
+            if(result.data.success) {
+              setPlaylist([])
+            }
+          })
+        }
+      })
       
-    // })
+    })
 
-    // .catch(error => console.error('Error creating playlist:', error));
+    .catch(error => console.error('Error creating playlist:', error));
 
     //console.log('current playlist: ', playlist);
     // const updatedPlaylist = playlist.filter((s) => {
