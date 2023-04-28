@@ -8,7 +8,9 @@ const axios = require('axios'); //easier library for fetching
 //this allows you to access .env files to read data
 //client ID is stored in .env file for security
 
-// const cors = require('cors');
+const PlaylistController = require('./controllers/PlaylistController')
+
+const cors = require('cors');
 require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
@@ -18,7 +20,7 @@ const cookieParser = require('cookie-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 app.use(cookieParser());
-// app.use(cors());
+app.use(cors());
 
 const clientId = process.env.CLIENT_ID; //ADD YOUR OWN CLIENT ID to your .env file
 const clientSecret = process.env.CLIENT_SECRET; //ADD YOUR OWN CLIENT SECRET
@@ -180,6 +182,39 @@ app.get('/callback', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../src/index.html'));
 });
+
+app.post('/makeplaylist', 
+  PlaylistController.createPlaylist,
+  (req, res) => {return res.status(200).json(res.locals.data)}
+)
+
+app.get('/playlist', 
+  PlaylistController.getPlaylist, 
+  (req, res) => {
+    return res.status(200). json(res.locals.wholePlaylist);
+  }
+)
+
+app.post('/playlist', 
+  PlaylistController.addToPlaylist, 
+  (req, res) => {
+    return res.status(200).json({success: true});
+  }
+)
+
+app.delete('/playlist', 
+  PlaylistController.deleteToPlaylist, 
+  (req,res) => {
+    return res.status(200).json({success: true})
+  }
+)
+
+app.delete('/playlist/all', 
+  PlaylistController.deleteAll, 
+  (req,res) => {
+    return res.status(200).json({success: true})
+  }
+)
 
 app.post('/getSongRecs', (req, res) => {
   // res.set('Access-Control-Allow-Origin', '*');

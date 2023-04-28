@@ -18,9 +18,10 @@ export async function getRecommendations(genres) {
   //TO DO: check if the useCookies method actually retrieves cookies within react app
   const token = getCookieValue('access_token');
   const tokenType = getCookieValue('token_type');
+   console.log('inside getRecommendations of fetch.js', genres)
 
   const params = {
-    limit: 30,
+    limit: 100,
     seed_genres: genres, //genres up to 5, need to be a string, comma-separated. ex: "pop,edm,chill"
   };
 
