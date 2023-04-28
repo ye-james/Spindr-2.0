@@ -26,7 +26,7 @@ const userSchema = new Schema({
       artistName: [Object],
       previewUrl: String,
       trackName: String,
-      traukUri: String,
+      trackUri: String,
     },
   ],
 });

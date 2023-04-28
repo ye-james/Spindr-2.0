@@ -4,6 +4,7 @@ import axios from "axios";
 export default function Playlist({ playlist, setPlaylist }) {
   console.log(playlist);
   const removeSong = (song) => {
+    console.log("song to be removed", song);
     //make axios request to backend to delete
     axios
       .delete("http://localhost:3000/playlist", {
@@ -13,13 +14,13 @@ export default function Playlist({ playlist, setPlaylist }) {
       })
       .then((result) => {
         console.log(result);
-        if (result.data.success) {
-          const updatedPlaylist = playlist.filter(
-            (s) => s.trackUri !== song.trackUri
-          );
-          console.log(updatedPlaylist);
-          setPlaylist(updatedPlaylist);
-        }
+        // if (result.data.success) {
+        //   const updatedPlaylist = playlist.filter(
+        //     (s) => s.trackUri !== song.trackUri
+        //   );
+        //   console.log(updatedPlaylist);
+        //   setPlaylist(updatedPlaylist);
+        // }
       })
       .catch((err) => {
         console.log(err);
