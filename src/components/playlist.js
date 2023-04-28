@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 export default function Playlist({ playlist, setPlaylist }) {
+  const [cookies] = useCookies(["access_token"]);
+
   console.log(playlist);
   const removeSong = (song) => {
-    console.log("song to be removed", song);
     //make axios request to backend to delete
     axios
       .delete("http://localhost:3000/playlist", {
@@ -14,17 +16,46 @@ export default function Playlist({ playlist, setPlaylist }) {
       })
       .then((result) => {
         console.log(result);
-        // if (result.data.success) {
-        //   const updatedPlaylist = playlist.filter(
-        //     (s) => s.trackUri !== song.trackUri
-        //   );
-        //   console.log(updatedPlaylist);
-        //   setPlaylist(updatedPlaylist);
-        // }
+        if (result.data.success) {
+          const updatedPlaylist = playlist.filter(
+            (s) => s.trackUri !== song.trackUri
+          );
+          console.log(updatedPlaylist);
+          setPlaylist(updatedPlaylist);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const addToSpotify = () => {
+    // const token = cookies.get('access_token');
+    // Get value of specific cookie
+    const token = cookies["access_token"];
+
+    // const tokenType = cookies.get('token_type');
+
+    fetch("https://api.spotify.com/v1/users/dom.c13/playlists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name: "Spindr Playlist",
+        public: false, // set to true if you want the playlist to be public
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log("New playlist created:", data))
+      .catch((error) => console.error("Error creating playlist:", error));
+
+    console.log("current playlist: ", playlist);
+    const updatedPlaylist = playlist.filter((s) => {
+      s.trackUri;
+    });
+    console.log("updated playlist: ", playlist);
   };
 
   return (
@@ -51,7 +82,9 @@ export default function Playlist({ playlist, setPlaylist }) {
           )}
         </div>
       </ul>
-      <button className="playlistBtn">Create Playlist on Spotify</button>
+      <button className="playlistBtn" onClick={addToSpotify}>
+        Create Playlist on Spotify
+      </button>
     </div>
   );
 }
