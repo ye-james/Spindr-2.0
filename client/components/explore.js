@@ -3,17 +3,17 @@ import { useNavigate, useHistory } from "react-router-dom";
 import Navbar from './navbar';
 
 /* IMPORTING IMAGES */
-import bgImg from '../../assets:images/explorebg.jpg'
-import pop1 from '../../assets:images/p1.jpg';
-import pop2 from '../../assets:images/p2.jpg';
-import pop3 from '../../assets:images/p3.jpg';
-import pop4 from '../../assets:images/p4.jpg';
-import pop5 from '../../assets:images/p5.jpg';
-import pop6 from '../../assets:images/p6.jpg';
-import pop7 from '../../assets:images/p7.jpg';
-import pop8 from '../../assets:images/p8.jpg';
-import pop9 from '../../assets:images/p9.jpg';
-import pop10 from '../../assets:images/p10.jpg';
+import bgImg from '../assets_images/explorebg.jpg'
+import pop1 from '../assets_images/p1.jpg';
+import pop2 from '../assets_images/p2.jpg';
+import pop3 from '../assets_images/p3.jpg';
+import pop4 from '../assets_images/p4.jpg';
+import pop5 from '../assets_images/p5.jpg';
+import pop6 from '../assets_images/p6.jpg';
+import pop7 from '../assets_images/p7.jpg';
+import pop8 from '../assets_images/p8.jpg';
+import pop9 from '../assets_images/p9.jpg';
+import pop10 from '../assets_images/p10.jpg';
 
 const genreList = ['Pop','Rock','Country','Ambient','Jazz','Classical','Latin','Techno','Hip-Hop', 'Blues'];
 const popList =[pop1,pop2,pop3,pop4,pop5,pop6,pop7,pop8,pop9,pop10 ];

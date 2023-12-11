@@ -8,7 +8,6 @@ const axios = require('axios'); //easier library for fetching
 //this allows you to access .env files to read data
 //client ID is stored in .env file for security
 
-const PlaylistController = require('./controllers/PlaylistController')
 
 const cors = require('cors');
 require('dotenv').config();
@@ -43,8 +42,13 @@ const scopes = [
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//Import routes
+const playlistRoute = require('./routers/playlist')
+
+app.use('/playlist', playlistRoute);
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080/');
   res.header('Access-Control-Allow-Credentials', true);
   res.setHeader(
     'Access-Control-Allow-Methods',
@@ -66,6 +70,8 @@ const stateKey = 'spotify_auth_state';
 
 //GET request to spotify's authorization page
 app.get('/login', (req, res) => {
+
+  
   //Below is for PKCE, to implement later
   // const codeVerifier = generateRandomString();
   // const codeChallenge = base64UrlEncode(crypto.createHash('sha256').update(codeVerifier).digest());
@@ -89,6 +95,8 @@ app.get('/login', (req, res) => {
 
 // get request on callback page. we set the callback page as redirect uri when we got client id from spotify
 app.get('/callback', (req, res) => {
+
+
   const code = req.query.code || null; //pulling out the authorization code after oauthing
   const state = req.query.state || null;
 
@@ -126,11 +134,11 @@ app.get('/callback', (req, res) => {
     },
   })
     .then((response) => {
-      // console.log('TOKEN: ', response.data);
+      //console.log('TOKEN: ', response.data);
       if (response.status === 200) {
+
         //we destructure the response.data which contains our token data
         const { access_token, token_type, refresh_token } = response.data;
-
         //note to jessica: im able to get the access token cookie to generate but not the other 2 for some reason
         //nvm, access token is a response cookie, apparently type and refresh tokens are on the req cookie
         res.cookie('access_token', access_token, {
@@ -180,41 +188,8 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/index.html'));
+  res.sendFile(path.join(__dirname, '../client/index.html'));
 });
-
-app.post('/makeplaylist', 
-  PlaylistController.createPlaylist,
-  (req, res) => {return res.status(200).json(res.locals.data)}
-)
-
-app.get('/playlist', 
-  PlaylistController.getPlaylist, 
-  (req, res) => {
-    return res.status(200). json(res.locals.wholePlaylist);
-  }
-)
-
-app.post('/playlist', 
-  PlaylistController.addToPlaylist, 
-  (req, res) => {
-    return res.status(200).json({success: true});
-  }
-)
-
-app.delete('/playlist', 
-  PlaylistController.deleteToPlaylist, 
-  (req,res) => {
-    return res.status(200).json({success: true})
-  }
-)
-
-app.delete('/playlist/all', 
-  PlaylistController.deleteAll, 
-  (req,res) => {
-    return res.status(200).json({success: true})
-  }
-)
 
 app.post('/getSongRecs', (req, res) => {
   // res.set('Access-Control-Allow-Origin', '*');
