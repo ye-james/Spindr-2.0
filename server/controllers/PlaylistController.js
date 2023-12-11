@@ -2,71 +2,67 @@ const User = require("../models/UserModel");
 
 const playlistController = {};
 
-playlistController.createPlaylist = (req, res, next) => {
-  User.create({ favList: [] })
-    .then((docs) => {
-      res.locals.data = docs;
-      return next();
-    })
-    .catch((err) => console.log("Error in createPlaylist"));
+playlistController.createPlaylist = async (req, res, next) => {
+  try {
+    const result = await User.create({ favList: [] })
+    if (result) return res.status(200).json({docs})
+
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({success: false, message:"Could not create playlist"})
+  }
 };
 
-playlistController.getPlaylist = (req, res, next) => {
-  User.find({})
-    .then((result) => {
-      if (result.length === 0) {
-        User.create({ favList: [] })
-          .then((newList) => {
-            res.locals.wholePlaylist = newList;
-            return next();
-          })
-          .catch((err) => console.log("Error in creating an empty list"));
-      } else {
-        res.locals.wholePlaylist = result;
-        return next();
-      }
-    })
-    .catch((err) => console.log("Error in getPlaylist"));
+playlistController.getPlaylist = async (req, res, next) => {
+  try {
+    const findPlaylistResult = await User.find({})
+
+    if (findPlaylistResult.length === 0) {
+      const createNewPlaylistResult = await User.create({ favList: [] })
+      return res.status(200).json(createNewPlaylistResult)
+    }
+    else {
+      return res.status(200).json(findPlaylistResult)
+    }
+  } catch(error) {
+    return res.status(500).json({success:false, message:"Could not find or create a favList playlist"})
+
+  }
 };
 
-playlistController.addToPlaylist = (req, res, next) => {
+playlistController.addToPlaylist = async (req, res, next) => {
   const { song } = req.body;
   const { trackName, artistName, albumImg, traukUri, previewUrl } = song;
-  console.log(trackName, artistName, albumImg, traukUri, previewUrl);
-  //console.log("song", song);
-  User.updateOne(
-    {},
-    {
-      $push: {
-        favList: { trackName, artistName, albumImg, traukUri, previewUrl },
-      },
-    }
-  )
-    .then((result) => {
-      console.log(result);
-      res.locals.addedData = result;
-      return next();
-    })
-    .catch((err) => console.log("Error in createPlaylist"));
+
+  try {
+    const result = await User.updateOne(
+      {},
+      {
+        $push: {
+          favList: { trackName, artistName, albumImg, traukUri, previewUrl },
+        },
+      }
+    );
+    if(result) res.status(200).json({success:true, message: "Successfully added to playlist"})
+    
+  } catch(error) {
+      console.log(error)
+      res.status(500).json({message: "Failed to add to playlist"})
+  }
+
 };
 
-playlistController.deleteToPlaylist = (req, res, next) => {
+playlistController.deleteToPlaylist = async (req, res, next) => {
   const { song } = req.body;
 
-  console.log(song.trackUri);
-  // User.delete({artistName, songName})
-  //   .then(result => {
-  //     res.locals.deleteData = result;
-  //     return next();
-  //   })
-  //   .catch(console.log("Error in deletePlaylist"));
-  console.log("req.body", song);
-  User.updateOne({}, { $pull: { favList: { trackUri: song.trackUri } } })
-    .then((result) => {
-      res.locals.deleteData = result;
-      return next();
-    })  
-    .catch(console.log("Error in deletePlaylist"));
+  try {
+    const result = await User.updateOne({}, { $pull: { favList: { _id: song._id } } })
+    if(result.acknowledged) return res.status(200).json({success:true})
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({success:false})
+  }
+
 };
 
 
